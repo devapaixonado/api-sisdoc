@@ -23,7 +23,10 @@ def get_all_usuarios(db: Session):
     return db.query(Usuario).all()
 
 def get_usuario(db: Session, id_usuario: int):
-    return db.query(Usuario).filter(Usuario.id_usuario == id_usuario).first()
+    usuario = db.query(Usuario).filter(Usuario.id_usuario == id_usuario).first()
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    return usuario
 
 def search_usuarios_by_filters(db: Session, filtros: UsuarioFiltro):
     query = db.query(Usuario)

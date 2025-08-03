@@ -5,14 +5,16 @@ from app.schemas.secao import (
     SecaoFiltro, SecaoCreate, SecaoUpdate
 )
 
-
 def create_secao(db: Session, data: SecaoCreate):
     secaoExists = db.query(Secao).filter(
         Secao.descricao == data.descricao
     ).first()
 
     if secaoExists:
-        raise ValueError(f"A seção {data.descricao} já existe!")
+        raise HTTPException(
+            status_code=400,
+            detail=f"Seção '{data.descricao}' já existe"
+        )
 
     secao = Secao(**data.dict())
     db.add(secao)
@@ -24,7 +26,10 @@ def get_all_secoes(db: Session):
     return db.query(Secao).all()
 
 def get_secao(db: Session, id_secao: int):
-    return db.query(Secao).filter(Secao.id_secao == id_secao).first()
+    secao = db.query(Secao).filter(Secao.id_secao == id_secao).first()
+    if not secao:
+        raise HTTPException(status_code=404, detail="Seção não encontrada")
+    return secao
 
 def search_secoes_by_filters(db: Session, filtros: SecaoFiltro):
     query = db.query(Secao)

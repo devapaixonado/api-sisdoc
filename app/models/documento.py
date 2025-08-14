@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text
+from sqlalchemy import Column, Integer, String, DateTime, func
 from app.db.base import Base
 from datetime import datetime, timezone
 
@@ -7,11 +7,14 @@ class Documento(Base):
     __table_args__ = {"schema": "sisdoc"}
 
     id_documento = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    id_topico = Column(Integer, nullable=False)
-    id_usuario = Column(Integer, nullable=False)
-    nome_arquivo = Column(String(255), nullable=False)
-    descricao = Column(Text)
-    tipo_arquivo = Column(String(50))
-    caminho_arquivo = Column(Text)
+    id_pasta = Column(Integer, nullable=False)
+    id_usuario_ultima_atualizacao = Column(Integer, nullable=False)
+    nome = Column(String(100), nullable=False)
+    descricao = Column(String(255), nullable=True)
     dt_inicio_vigencia = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     dt_fim_vigencia = Column(DateTime(timezone=True))
+    dt_ultima_atualizacao = Column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=func.now()
+    )

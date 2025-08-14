@@ -33,22 +33,20 @@ def search_documentos_by_filters(db: Session, filtros: DocumentoFiltro):
 
     if filtros.id_documento:
         query = query.filter(Documento.id_documento == filtros.id_documento)
-    if filtros.id_topico:
-        query = query.filter(Documento.id_topico == filtros.id_topico)
-    if filtros.id_usuario:
-        query = query.filter(Documento.id_usuario == filtros.id_usuario)
-    if filtros.nome_arquivo:
-        query = query.filter(Documento.nome_arquivo.ilike(f"%{filtros.nome_arquivo}%"))
+    if filtros.id_usuario_ultima_atualizacao:
+        query = query.filter(Documento.id_usuario_ultima_atualizacao == filtros.id_usuario_ultima_atualizacao)
+    if filtros.nome:
+        query = query.filter(Documento.nome.ilike(f"%{filtros.nome}%"))
     if filtros.descricao:
         query = query.filter(Documento.descricao.ilike(f"%{filtros.descricao}%"))
-    if filtros.descricao:
-        query = query.filter(Documento.tipo_arquivo.ilike(f"%{filtros.tipo_arquivo}%"))
     if filtros.caminho_arquivo:
         query = query.filter(Documento.caminho_arquivo.ilike(f"%{filtros.caminho_arquivo}%"))
     if filtros.dt_inicio_vigencia:
         query = query.filter(Documento.dt_inicio_vigencia == filtros.dt_inicio_vigencia)
     if filtros.dt_fim_vigencia:
         query = query.filter(Documento.dt_fim_vigencia == filtros.dt_fim_vigencia)
+    if filtros.dt_ultima_atualizacao:
+        query = query.filter(Documento.dt_ultima_atualizacao == filtros.dt_ultima_atualizacao)
 
     return query.all()
 

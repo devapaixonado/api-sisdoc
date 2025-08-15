@@ -33,14 +33,14 @@ def search_documentos_by_filters(db: Session, filtros: DocumentoFiltro):
 
     if filtros.id_documento:
         query = query.filter(Documento.id_documento == filtros.id_documento)
+    if filtros.id_pasta:
+        query = query.filter(Documento.id_pasta == filtros.id_pasta)
     if filtros.id_usuario_ultima_atualizacao:
         query = query.filter(Documento.id_usuario_ultima_atualizacao == filtros.id_usuario_ultima_atualizacao)
     if filtros.nome:
         query = query.filter(Documento.nome.ilike(f"%{filtros.nome}%"))
     if filtros.descricao:
         query = query.filter(Documento.descricao.ilike(f"%{filtros.descricao}%"))
-    if filtros.caminho_arquivo:
-        query = query.filter(Documento.caminho_arquivo.ilike(f"%{filtros.caminho_arquivo}%"))
     if filtros.dt_inicio_vigencia:
         query = query.filter(Documento.dt_inicio_vigencia == filtros.dt_inicio_vigencia)
     if filtros.dt_fim_vigencia:

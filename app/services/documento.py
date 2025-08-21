@@ -6,18 +6,18 @@ from app.schemas.documento import (
 )
 
 def create_documento(db: Session, data: DocumentoCreate):
-    secaoExists = db.query(Documento).filter(
-        Documento.descricao == data.descricao
+    documentoExists = db.query(Documento).filter(
+        Documento.nome == data.nome
     ).first()
 
-    if secaoExists:
-        raise ValueError(f"O documento {data.descricao} já existe!")
+    if documentoExists:
+        raise ValueError(f"O documento {data.nome} já existe!")
 
-    secao = Documento(**data.dict())
-    db.add(secao)
+    documento = Documento(**data.dict())
+    db.add(documento)
     db.commit()
-    db.refresh(secao)
-    return secao
+    db.refresh(documento)
+    return documento
 
 def get_all_documentos(db: Session):
     return db.query(Documento).all()
@@ -41,6 +41,8 @@ def search_documentos_by_filters(db: Session, filtros: DocumentoFiltro):
         query = query.filter(Documento.nome.ilike(f"%{filtros.nome}%"))
     if filtros.descricao:
         query = query.filter(Documento.descricao.ilike(f"%{filtros.descricao}%"))
+    if filtros.conteudo:
+        query = query.filter(Documento.conteudo.ilike(f"%{filtros.conteudo}%"))
     if filtros.dt_inicio_vigencia:
         query = query.filter(Documento.dt_inicio_vigencia == filtros.dt_inicio_vigencia)
     if filtros.dt_fim_vigencia:

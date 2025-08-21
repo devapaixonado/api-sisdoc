@@ -8,6 +8,7 @@ class DocumentoBase(BaseModel):
     id_usuario_ultima_atualizacao: int = None
     nome: str
     descricao: Optional[str] = None
+    conteudo: Optional[str] = None
     dt_inicio_vigencia: Optional[datetime] = None
     dt_fim_vigencia: Optional[datetime] = None
     dt_ultima_atualizacao: Optional[datetime] = None
@@ -17,6 +18,7 @@ class DocumentoCreate(BaseModel):
     id_usuario_ultima_atualizacao: int
     nome: str
     descricao: Optional[str] = None
+    conteudo: Optional[str] = None
     
 class DocumentoFiltro(BaseModel):
     id_documento: Optional[int] = None
@@ -24,6 +26,7 @@ class DocumentoFiltro(BaseModel):
     id_usuario_ultima_atualizacao: Optional[int] = None
     nome: Optional[str] = None
     descricao: Optional[str] = None
+    conteudo: Optional[str] = None
     dt_inicio_vigencia: Optional[datetime] = None
     dt_fim_vigencia: Optional[datetime] = None
     dt_ultima_atualizacao: Optional[datetime] = None
@@ -33,6 +36,7 @@ class DocumentoUpdate(BaseModel):
     id_usuario_ultima_atualizacao: Optional[int] = None
     nome: Optional[str] = None
     descricao: Optional[str] = None
+    conteudo: Optional[str] = None
     dt_inicio_vigencia: Optional[datetime] = None
     dt_fim_vigencia: Optional[datetime] = None
     dt_ultima_atualizacao: Optional[datetime] = None
